@@ -13,13 +13,41 @@
     <script src="node/Binary.js"></script>
 
     <script src="evaluator/Evaluator.js"></script>
+
+    <link rel="stylesheet" href="stylesheet.css">
 </head>
 <body>
     <h1>
         Calculator with bit manipulation
     </h1>
 
-    <input id="eq" type="text" placeholder="Equation">
-    <input id="submit" type="submit" value="Submit">
+    <main>
+        <div class="wrapper">
+            <div>
+                <span id="pastEq">32</span>
+                <input id="eq" type="text">
+            </div>
+
+            <input onclick="handleClick(this);" type="button" value="1">
+            <input onclick="handleClick(this);" type="button" value="2">
+            <input onclick="handleClick(this);" type="button" value="3">
+            <input onclick="handleClick(this);" type="button" value="+">
+
+            <input onclick="handleClick(this);" type="button" value="4">
+            <input onclick="handleClick(this);" type="button" value="5">
+            <input onclick="handleClick(this);" type="button" value="6">
+            <input onclick="handleClick(this);" type="button" value="-">
+
+            <input onclick="handleClick(this);" type="button" value="7">
+            <input onclick="handleClick(this);" type="button" value="8">
+            <input onclick="handleClick(this);" type="button" value="9">
+            <input onclick="handleClick(this);" type="button" value="*">
+            
+            <input onclick="handleClick(this);" type="button" value="0">
+            <input onclick="handleClick(this);" type="button" value=".">
+            <input onclick="handleClick(this);" type="button" value="=">
+            <input onclick="handleClick(this);" type="button" value="/">
+        </div>
+    </main>
 </body>
 </html>

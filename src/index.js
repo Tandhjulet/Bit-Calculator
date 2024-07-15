@@ -1,10 +1,15 @@
 const submit = document.getElementById("submit");
-submit.onclick = () => {
-    const equation = document.getElementById("eq").value;
-    const nodes = parse(new TokenStream(new InputStream(equation)));
-    const evaluted = evaluate(nodes[0]);
-    console.log(evaluted);
-};
+function handleClick(e) {
+    const eqElement = document.getElementById("eq");
+    if (e.value === "=") {
+        const nodes = parse(new TokenStream(new InputStream(eqElement.value)));
+        const evaluated = evaluate(nodes[0]);
+        document.getElementById("pastEq").innerText = evaluated;
+        eqElement.value = "";
+        return;
+    }
+    eqElement.value += e.value;
+}
 function parse(stream) {
     const nodes = [];
     function parseBinary(left, currPrec) {
@@ -12,11 +17,11 @@ function parse(stream) {
         if (currToken && currToken.type === "Operator" && currToken instanceof OperatorNode) {
             if (currToken.getPrecedence() > currPrec) {
                 stream.next();
-                const leftNode = stream.next();
+                const rightNode = stream.next();
                 stream.peek();
                 return parseBinary(new BinaryNode(currToken, 
                 // both left and right must be a number/constant as adjacent operators arent supported
-                left, parseBinary(leftNode, currToken.getPrecedence())), currPrec);
+                left, parseBinary(rightNode, currToken.getPrecedence())), currPrec);
             }
         }
         return left;
