@@ -21,11 +21,11 @@ function applyOperator(operator: keyof Operators, a: number, b: number): number 
         case "+":
             return add(a, b)
         case "-":
-            break;
+            return subtract(a, b)
         case "*":
-            break;
+            return multiply(a, b)
         case "/":
-            break;
+            return divide(a, b)
     }
     throw new Error("Unknown operator " + operator)
 }
@@ -42,8 +42,8 @@ function add(x: number, y: number) {
 
     if(DEBUG) {
         console.log("---------")
-        console.log("sum", x ^ y)
-        console.log("carry", (x & y) << 1)
+        console.log("sum", (x ^ y).toString())
+        console.log("carry", ((x & y) << 1).toString())
     }
     
     return add(
@@ -57,3 +57,43 @@ function add(x: number, y: number) {
     )
 }
 
+/**
+ * Implementation of a simple <https://en.wikipedia.org/wiki/Subtractor#Half_subtractor>.  
+ * Addition of carry and a^b until carry becomes 0.
+ * @returns Difference between two numbers
+ */
+function subtract(x: number, y: number) {
+    // The same idea as with addition can be applied here.
+    // x - y is x^y and the borrow becomes ~x & y << 1 as displayed in the truth table below
+
+    // x | y | x - y | borrow
+    // ----------------------
+    // 1 | 1 |   0   |   0
+    // 1 | 0 |   1   |   0
+    // 0 | 0 |   0   |   0
+    // 0 | 1 |   1   |   1
+
+    if(y == 0)
+        return x;
+
+    if(DEBUG) {
+        console.log("---------")
+        console.log("sum", (x ^ y).toString(2))
+        console.log("borrow", ((~x & y) << 1).toString(2))
+    }
+    
+    return subtract(
+        // if x & y dont have bits in the same position, their sum
+        // can be obtained through XOR (^)
+        x ^ y,
+        (~x & y) << 1
+    )
+}
+
+function multiply(a: number, b: number) {
+    return a * b;
+}
+
+function divide(a: number, b: number) {
+    return a / b;
+}

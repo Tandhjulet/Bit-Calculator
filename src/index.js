@@ -1,11 +1,19 @@
-const submit = document.getElementById("submit");
 function handleClick(e) {
     const eqElement = document.getElementById("eq");
     if (e.value === "=") {
-        const nodes = parse(new TokenStream(new InputStream(eqElement.value)));
-        const evaluated = evaluate(nodes[0]);
-        document.getElementById("pastEq").innerText = evaluated;
-        eqElement.value = "";
+        try {
+            const nodes = parse(new TokenStream(new InputStream(eqElement.value)));
+            const evaluated = evaluate(nodes[0]);
+            const el = document.getElementById("pastEq");
+            el.style.color = null;
+            el.innerText = eqElement.value + "=" + evaluated;
+            eqElement.value = "";
+        }
+        catch (err) {
+            const el = document.getElementById("pastEq");
+            el.innerText = err;
+            el.style.color = "red";
+        }
         return;
     }
     eqElement.value += e.value;
@@ -80,21 +88,11 @@ class TokenStream {
         throw new Error("Unsupported char " + ch);
     }
     readNumber() {
-        function read(ch) {
-            if (ch == ".") {
-                if (hasDot)
-                    return false;
-                hasDot = true;
-                return true;
-            }
-            return TokenStream.isDigit(ch);
-        }
-        let hasDot = false;
         let str = "";
-        while (!this.input.end() && read(this.input.peek())) {
+        while (!this.input.end() && TokenStream.isDigit(this.input.peek())) {
             str += this.input.next();
         }
-        return new ConstantNode(hasDot ? parseFloat(str) : parseInt(str));
+        return new ConstantNode(parseInt(str));
     }
     static isDigit(ch) {
         return /[0-9]/.test(ch);

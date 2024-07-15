@@ -1,3 +1,17 @@
+body {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1 {
+    font-weight: 300;
+}
+
 .wrapper {
     display: grid;
     width: fit-content;
@@ -6,12 +20,10 @@
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(4, 1fr);
 
-    column-gap: 5px;
-    row-gap: 5px;
+    gap: 5px;
 
     grid-auto-flow: row;
 
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: bold;
 
     background-color: lightgray;
@@ -31,6 +43,7 @@
 
 #pastEq {
     font-weight: normal;
+    height: 1lh;
 }
 
 span {
@@ -44,12 +57,16 @@ span {
     padding-block: 4px;
 }
 
-input[type=button]:nth-child(4n+1) {
+input[type=button]:nth-child(4n+1), input[type=button]:nth-last-child(1) {
     background-color: coral;
 }
 
 input[type=button]:nth-last-child(2) {
     background-color: lightgreen;
+}
+
+input[value="="] {
+    grid-column: 2 / 4;
 }
 
 input[type=button] {
