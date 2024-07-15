@@ -1,5 +1,5 @@
 class BinaryNode extends ExprNode {
-    get type() { return "Binary" }
+    get type(): keyof typeof NodeType { return "Binary" }
 
     operator: OperatorNode;
     left: ConstantNode;

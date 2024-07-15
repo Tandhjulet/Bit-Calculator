@@ -14,7 +14,7 @@ class OperatorNode extends ExprNode {
         "/": 20,
     }
 
-    get type() { return "Operator" }
+    get type(): keyof typeof NodeType { return "Operator" }
 
     private operator: keyof Operators;
 

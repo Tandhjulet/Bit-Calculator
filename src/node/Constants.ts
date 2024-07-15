@@ -1,5 +1,5 @@
 class ConstantNode extends ExprNode {
-    get type() { return "Constant" }
+    get type(): keyof typeof NodeType { return "Constant" }
 
     private value: number;
 

@@ -1,3 +1,10 @@
+enum NodeType {
+    "Node",
+    "Constant",
+    "Binary",
+    "Operator"
+}
+
 class ExprNode {
-    get type() { return "Node" }
+    get type(): keyof typeof NodeType { return "Node" }
 }
