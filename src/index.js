@@ -13,6 +13,7 @@ function handleClick(e) {
             const el = document.getElementById("pastEq");
             el.innerText = err;
             el.style.color = "red";
+            eqElement.value = "";
         }
         return;
     }

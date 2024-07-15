@@ -59,7 +59,6 @@ function add(x: number, y: number) {
 
 /**
  * Implementation of a simple <https://en.wikipedia.org/wiki/Subtractor#Half_subtractor>.  
- * Addition of carry and a^b until carry becomes 0.
  * @returns Difference between two numbers
  */
 function subtract(x: number, y: number) {
@@ -83,17 +82,46 @@ function subtract(x: number, y: number) {
     }
     
     return subtract(
-        // if x & y dont have bits in the same position, their sum
-        // can be obtained through XOR (^)
         x ^ y,
         (~x & y) << 1
     )
 }
 
+/**
+ * Basic implementation of Russian Peasant 
+ * @returns Product of a and b
+ */
 function multiply(a: number, b: number) {
-    return a * b;
+    let res: number = 0;
+    
+    while(b > 0) {
+        // if b is odd the first number should be added to the result.
+        if ((b & 1) != 0)
+            res = add(res, a);
+
+        // double a and half b
+        a = a << 1
+        b = b >> 1
+    }
+
+    return res;
 }
 
-function divide(a: number, b: number) {
-    return a / b;
+function divide(dividend: number, divisor: number) {
+    let sign = 1;
+    if((dividend < 0) !== (divisor < 0)) {
+        sign = -1
+    }
+
+    let m = Math.abs(dividend), n = Math.abs(divisor), count = 0;
+    while(m >= n) {
+        m = subtract(m, n)
+        count = add(count, 1)
+    }
+
+    if(sign === -1) {
+        count = -count;
+    }
+
+    return count;
 }
